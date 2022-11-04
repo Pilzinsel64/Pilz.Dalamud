@@ -20,6 +20,12 @@ namespace Pilz.Dalamud.Nameplates.Model
         PartyLeader = 061521,
         PartyMember = 061522,
         RolePlaying = 061545,
-        GroupPose = 061546
+        GroupPose = 061546,
+        NewAdventurer = 061523,
+        Mentor = 061540,
+        MentorPvE = 061542,
+        MentorCrafting = 061543,
+        MentorPvP = 061544,
+        Returner = 061547,
     }
 }
