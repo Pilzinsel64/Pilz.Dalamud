@@ -30,10 +30,9 @@ namespace Pilz.Dalamud.Nameplates.Tools
         /// <param name="iconId">The incoming icon id that is being overwritten by the plugin.</param>
         /// <param name="priorityIconId">The icon id that should be used.</param>
         /// <returns>Whether a priority icon was found.</returns>
-        private bool IsPriorityIcon(int iconId, out int priorityIconId, ActivityContext activityContext)
+        public bool IsPriorityIcon(int iconId, ActivityContext activityContext)
         {
             bool isPrioIcon;
-            priorityIconId = iconId;
 
             if (!Settings.UsePriorizedIcons && iconId != (int)StatusIcons.Disconnecting && iconId != (int)StatusIcons.Disconnecting + 50)
                 isPrioIcon = false;
@@ -46,9 +45,6 @@ namespace Pilz.Dalamud.Nameplates.Tools
                 // Determine whether the incoming icon should take priority over the job icon
                 // Check the id plus 50 as that's an alternately sized version
                 isPrioIcon = priorityIcons.Contains(iconId) || priorityIcons.Contains(iconId + 50);
-
-                // Save the id of the icon
-                priorityIconId = iconId;
             }
 
             return isPrioIcon;
