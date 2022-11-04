@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pilz.Dalamud.Nameplates.Model;
 
 namespace Pilz.Dalamud.Nameplates
 {
@@ -110,9 +111,14 @@ namespace Pilz.Dalamud.Nameplates
 
                 if (AddonNamePlate_SetPlayerNameManaged != null)
                 {
+                    // Create NamePlateObject if possible
+                    var namePlateObj = new SafeNameplateObject(playerNameplateObjectPtr);
+
+                    // Create new event
                     var managedEventArgs = new AddonNamePlate_SetPlayerNameManagedEventArgs
                     {
                         OriginalEventArgs = eventArgs,
+                        SafeNameplateObject = namePlateObj,
                         Title = GameInterfaceHelper.ReadSeString(eventArgs.TitlePtr),
                         Name = GameInterfaceHelper.ReadSeString(eventArgs.NamePtr),
                         FreeCompany = GameInterfaceHelper.ReadSeString(eventArgs.FreeCompanyPtr)

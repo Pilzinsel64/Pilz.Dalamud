@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
+using Pilz.Dalamud.Nameplates.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Pilz.Dalamud.Nameplates.EventArgs
         private new AddonNamePlate_SetPlayerNameEventArgs OriginalEventArgs
             => base.OriginalEventArgs as AddonNamePlate_SetPlayerNameEventArgs;
 
+        public SafeNameplateObject SafeNameplateObject { get; set; }
         public SeString Title { get; set; }
         public SeString Name { get; set; }
         public SeString FreeCompany { get; set; }
