@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pilz.Dalamud", "Pilz.Dalamud\Pilz.Dalamud.csproj", "{35197085-3110-46FD-8336-42937673FBAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35197085-3110-46FD-8336-42937673FBAB}.Debug|x64.ActiveCfg = Debug|x64
+		{35197085-3110-46FD-8336-42937673FBAB}.Debug|x64.Build.0 = Debug|x64
+		{35197085-3110-46FD-8336-42937673FBAB}.Release|x64.ActiveCfg = Release|x64
+		{35197085-3110-46FD-8336-42937673FBAB}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8292530B-CC9E-447D-BCE1-251CDF7646C6}
+	EndGlobalSection
+EndGlobal
