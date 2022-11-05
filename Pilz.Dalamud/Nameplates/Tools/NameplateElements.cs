@@ -8,8 +8,8 @@ namespace Pilz.Dalamud.Nameplates.Tools
 {
     public enum NameplateElements
     {
-        Title,
         Name,
+        Title,
         FreeCompany
     }
 }
