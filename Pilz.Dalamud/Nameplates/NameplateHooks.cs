@@ -52,7 +52,7 @@ namespace Pilz.Dalamud.Nameplates
         /// </summary>
         public NameplateHooks()
         {
-            Initialize();
+            SignatureHelper.Initialise(this);
         }
 
         ~NameplateHooks()
@@ -70,7 +70,6 @@ namespace Pilz.Dalamud.Nameplates
         /// </summary>
         internal void Initialize()
         {
-            SignatureHelper.Initialise(this);
             hook_AddonNamePlate_SetPlayerNameplateDetour?.Enable();
         }
 
@@ -155,7 +154,7 @@ namespace Pilz.Dalamud.Nameplates
 
                     // Get new Title string ontent
                     var titleNewRaw = managedEventArgs.Title.Encode();
-                    if (titleRaw.SequenceEqual(titleNewRaw))
+                    if (!titleRaw.SequenceEqual(titleNewRaw))
                     {
                         eventArgs.TitlePtr = GameInterfaceHelper.PluginAllocate(titleNewRaw);
                         freeTitle = true;
@@ -163,7 +162,7 @@ namespace Pilz.Dalamud.Nameplates
 
                     // Get new Name string ontent
                     var nameNewRaw = managedEventArgs.Name.Encode();
-                    if (nameRaw.SequenceEqual(nameNewRaw))
+                    if (!nameRaw.SequenceEqual(nameNewRaw))
                     {
                         eventArgs.NamePtr = GameInterfaceHelper.PluginAllocate(nameNewRaw);
                         freeName = true;
@@ -171,7 +170,7 @@ namespace Pilz.Dalamud.Nameplates
 
                     // Get new Free Company string ontent
                     var freeCompanyNewRaw = managedEventArgs.FreeCompany.Encode();
-                    if (freeCompanyRaw.SequenceEqual(freeCompanyNewRaw))
+                    if (!freeCompanyRaw.SequenceEqual(freeCompanyNewRaw))
                     {
                         eventArgs.FreeCompanyPtr = GameInterfaceHelper.PluginAllocate(freeCompanyNewRaw);
                         freeFreeCompany = true;

@@ -14,11 +14,11 @@ namespace Pilz.Dalamud
 {
     public class PluginServices
     {
-        [PluginService] public static GameGui GameGui { get; private set; } = null!;
-        [PluginService] public static DalamudPluginInterface PluginInterface { get; private set; } = null!;
-        [PluginService] public static ClientState ClientState { get; private set; } = null!;
-        [PluginService] public static DataManager DataManager { get; private set; } = null!;
-        [PluginService] public static ObjectTable ObjectTable { get; private set; } = null!;
+        [PluginService] public static GameGui GameGui { get; set; } = null;
+        [PluginService] public static DalamudPluginInterface PluginInterface { get; set; } = null;
+        [PluginService] public static ClientState ClientState { get; set; } = null;
+        [PluginService] public static DataManager DataManager { get; set; } = null;
+        [PluginService] public static ObjectTable ObjectTable { get; set; } = null;
 
         public static void Initialize(DalamudPluginInterface dalamudPluginInterface)
         {
