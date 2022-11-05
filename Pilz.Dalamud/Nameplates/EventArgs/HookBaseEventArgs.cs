@@ -8,6 +8,11 @@ namespace Pilz.Dalamud.Nameplates.EventArgs
 {
     public abstract class HookBaseEventArgs
     {
-        public bool CallOriginal { get; set; } = true;
+        internal event Action CallOriginal;
+
+        public void Original()
+        {
+            CallOriginal?.Invoke();
+        }
     }
 }

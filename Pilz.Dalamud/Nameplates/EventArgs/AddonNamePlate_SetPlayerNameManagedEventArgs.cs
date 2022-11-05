@@ -10,8 +10,11 @@ namespace Pilz.Dalamud.Nameplates.EventArgs
 {
     public class AddonNamePlate_SetPlayerNameManagedEventArgs : HookWithResultManagedBaseEventArgs<IntPtr>
     {
-        private new AddonNamePlate_SetPlayerNameEventArgs OriginalEventArgs
-            => base.OriginalEventArgs as AddonNamePlate_SetPlayerNameEventArgs;
+        public new AddonNamePlate_SetPlayerNameEventArgs OriginalEventArgs
+        {
+            get => base.OriginalEventArgs as AddonNamePlate_SetPlayerNameEventArgs;
+            set => base.OriginalEventArgs = value;
+        }
 
         public SafeNameplateObject SafeNameplateObject { get; set; }
         public SeString Title { get; set; }

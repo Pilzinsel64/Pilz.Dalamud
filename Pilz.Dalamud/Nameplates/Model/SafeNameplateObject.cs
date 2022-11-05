@@ -12,8 +12,8 @@ namespace Pilz.Dalamud.Nameplates.Model
 {
     public class SafeNameplateObject
     {
-        public readonly IntPtr Pointer;
-        public readonly AddonNamePlate.NamePlateObject Data;
+        public IntPtr Pointer { get; }
+        public AddonNamePlate.NamePlateObject Data { get; }
 
         private int _Index;
         private SafeNameplateInfo _NamePlateInfo;

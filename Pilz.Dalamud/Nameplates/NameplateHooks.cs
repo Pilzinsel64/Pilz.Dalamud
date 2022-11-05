@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pilz.Dalamud.Nameplates.Model;
+using Lumina.Excel.GeneratedSheets;
+using System.Xml.Linq;
 
 namespace Pilz.Dalamud.Nameplates
 {
@@ -17,14 +19,14 @@ namespace Pilz.Dalamud.Nameplates
         /// Will be executed when the the Game wants to update the content of a nameplate with the details of the Player.
         /// </summary>
         public event AddonNamePlate_SetPlayerNameEventHandler AddonNamePlate_SetPlayerName;
-        public delegate IntPtr AddonNamePlate_SetPlayerNameEventHandler(AddonNamePlate_SetPlayerNameEventArgs eventArgs);
+        public delegate void AddonNamePlate_SetPlayerNameEventHandler(AddonNamePlate_SetPlayerNameEventArgs eventArgs);
 
         /// <summary>
         /// Will be executed when the the Game wants to update the content of a nameplate with the details of the Player.
         /// This will event acts on a higher level with SeString instead of IntPtr e.g.
         /// </summary>
         public event AddonNamePlate_SetPlayerNameManagedEventHandler AddonNamePlate_SetPlayerNameManaged;
-        public delegate IntPtr AddonNamePlate_SetPlayerNameManagedEventHandler(AddonNamePlate_SetPlayerNameManagedEventArgs eventArgs);
+        public delegate void AddonNamePlate_SetPlayerNameManagedEventHandler(AddonNamePlate_SetPlayerNameManagedEventArgs eventArgs);
 
         [Signature("48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2", DetourName = nameof(SetPlayerNameplateDetour))]
         private readonly Hook<AddonNamePlate_SetPlayerNameplateDetour>? hook_AddonNamePlate_SetPlayerNameplateDetour = null;
@@ -91,10 +93,6 @@ namespace Pilz.Dalamud.Nameplates
 
             if (IsHookEnabled(hook_AddonNamePlate_SetPlayerNameplateDetour))
             {
-                var freeTitle = false;
-                var freeName = false;
-                var freeFreeCompany = false;
-
                 var eventArgs = new AddonNamePlate_SetPlayerNameEventArgs
                 {
                     PlayerNameplateObjectPtr = playerNameplateObjectPtr,
@@ -106,11 +104,34 @@ namespace Pilz.Dalamud.Nameplates
                     IconID = iconId
                 };
 
+                void callOriginal()
+                {
+                    eventArgs.Result = eventArgs.Original();
+                }
+
+                // Add handler for the Original call
+                eventArgs.CallOriginal += () =>
+                {
+                    return hook_AddonNamePlate_SetPlayerNameplateDetour.Original(
+                        eventArgs.PlayerNameplateObjectPtr,
+                        eventArgs.IsTitleAboveName,
+                        eventArgs.IsTitleVisible,
+                        eventArgs.TitlePtr,
+                        eventArgs.NamePtr,
+                        eventArgs.FreeCompanyPtr,
+                        eventArgs.IconID);
+                };
+
                 // Invoke Event
+                var hasDefaultHookEvent = AddonNamePlate_SetPlayerName != null;
                 AddonNamePlate_SetPlayerName?.Invoke(eventArgs);
 
                 if (AddonNamePlate_SetPlayerNameManaged != null)
                 {
+                    var freeTitle = false;
+                    var freeName = false;
+                    var freeFreeCompany = false;
+
                     // Create NamePlateObject if possible
                     var namePlateObj = new SafeNameplateObject(playerNameplateObjectPtr);
 
@@ -155,28 +176,26 @@ namespace Pilz.Dalamud.Nameplates
                         eventArgs.FreeCompanyPtr = GameInterfaceHelper.PluginAllocate(freeCompanyNewRaw);
                         freeFreeCompany = true;
                     }
+
+                    // Call Original as we changed something
+                    callOriginal();
+
+                    // Free memory
+                    if (freeTitle)
+                        GameInterfaceHelper.PluginFree(eventArgs.TitlePtr);
+                    if (freeName)
+                        GameInterfaceHelper.PluginFree(eventArgs.NamePtr);
+                    if (freeFreeCompany)
+                        GameInterfaceHelper.PluginFree(eventArgs.FreeCompanyPtr);
+                }
+                else if(!hasDefaultHookEvent)
+                {
+                    // Call original in case of nothing get called, just to get secure it will not break the game when not calling it.
+                    callOriginal();
                 }
 
-                // Call Original and set result
-                if (eventArgs.CallOriginal)
-                    result = hook_AddonNamePlate_SetPlayerNameplateDetour.Original(
-                        eventArgs.PlayerNameplateObjectPtr,
-                        eventArgs.IsTitleAboveName,
-                        eventArgs.IsTitleVisible,
-                        eventArgs.TitlePtr,
-                        eventArgs.NamePtr,
-                        eventArgs.FreeCompanyPtr,
-                        eventArgs.IconID);
-                else
-                    result = eventArgs.Result;
-
-                // Free memory
-                if (freeTitle)
-                    GameInterfaceHelper.PluginFree(eventArgs.TitlePtr);
-                if (freeName)
-                    GameInterfaceHelper.PluginFree(eventArgs.NamePtr);
-                if (freeFreeCompany)
-                    GameInterfaceHelper.PluginFree(eventArgs.FreeCompanyPtr);
+                // Set result
+                result = eventArgs.Result;
             }
 
             return result;
