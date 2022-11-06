@@ -13,7 +13,7 @@ namespace Pilz.Dalamud.Tools.Strings
     {
         public static void ApplyStringChanges(StringChangesProps props)
         {
-            if (props.StringChanges.Any())
+            if (props.StringChanges != null && props.StringChanges.Any())
             {
                 var seString = props.Destination;
                 List<StringPosition> stringPositionsOrdered = GetOrderedStringPositions(props);

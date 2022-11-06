@@ -13,9 +13,9 @@ namespace Pilz.Dalamud.Nameplates.Tools
 
         public NameplateChanges()
         {
-            changes.Add(NameplateElements.Title, new StringChangesProps());
-            changes.Add(NameplateElements.Name, new StringChangesProps());
-            changes.Add(NameplateElements.FreeCompany, new StringChangesProps());
+            changes.Add(NameplateElements.Title, new());
+            changes.Add(NameplateElements.Name, new());
+            changes.Add(NameplateElements.FreeCompany, new());
         }
 
         /// <summary>

@@ -33,8 +33,12 @@ namespace Pilz.Dalamud.Nameplates.Tools
 
                 if (fontIcon != null)
                 {
+                    // Set new font icon as string change
                     var iconPayload = new IconPayload(fontIcon.Value);
                     stringChange.Payloads.Insert(0, iconPayload);
+
+                    // Use new status icon as status icon
+                    statusIcon = newStatusIcon;
                 }
             }
 

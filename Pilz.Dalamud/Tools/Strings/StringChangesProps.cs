@@ -17,11 +17,11 @@ namespace Pilz.Dalamud.Tools.Strings
         /// <summary>
         /// The changes that should be applied to the destination.
         /// </summary>
-        public StringChanges StringChanges { get; set; }
+        public StringChanges StringChanges { get; set; } = new();
         /// <summary>
         /// Payloads to use as anchor where the changes should be applied to.
         /// </summary>
-        public List<Payload> AnchorPayloads { get; set; }
+        public List<Payload> AnchorPayloads { get; set; } = new();
         /// <summary>
         /// A single payload to use as anchor where the changes should be applied to.
         /// This property will only be used if StringChange.ForceSingleAnchorPayload is true.
