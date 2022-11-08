@@ -26,6 +26,7 @@
         <FileVersion>0.1.0.0</FileVersion>
         <AssemblyVersion>0.1.0.0</AssemblyVersion>
         <Version>0.1.0</Version>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
   
     <ItemGroup>
