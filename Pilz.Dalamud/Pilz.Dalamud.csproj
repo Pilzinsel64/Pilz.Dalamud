@@ -18,6 +18,11 @@
  
     <PropertyGroup>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <Copyright>Pilzinsel64</Copyright>
+        <PackageProjectUrl>https://github.com/Pilzinsel64/Pilz.Dalamud</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Pilzinsel64/Pilz.Dalamud</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
   
     <ItemGroup>
