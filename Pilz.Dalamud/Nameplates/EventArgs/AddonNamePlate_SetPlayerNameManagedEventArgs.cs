@@ -17,8 +17,8 @@ namespace Pilz.Dalamud.Nameplates.EventArgs
         }
 
         public SafeNameplateObject SafeNameplateObject { get; set; }
-        public SeString Title { get; set; }
-        public SeString Name { get; set; }
+        public SeString Title { get; internal set; }
+        public SeString Name { get; internal set; }
         public SeString FreeCompany { get; set; }
 
         public bool IsTitleAboveName
