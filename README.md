@@ -57,7 +57,7 @@ public class NameplateFeature : IDisposable
 }
 ```
 
-This is an example of editing the title to "Good Player" and change the color of the name:
+This is an example of editing the title to "Good Player", make the name italic and also force the title to always be above the name:
 
 ```cs
 private void Hooks_AddonNamePlate_SetPlayerNameManaged(Pilz.Dalamud.Nameplates.EventArgs.AddonNamePlate_SetPlayerNameManagedEventArgs eventArgs)
