@@ -20,6 +20,7 @@ namespace Pilz.Dalamud.Nameplates.EventArgs
         public SeString Title { get; internal set; }
         public SeString Name { get; internal set; }
         public SeString FreeCompany { get; internal set; }
+        public SeString Prefix { get; internal set; }
 
         public bool IsTitleAboveName
         {

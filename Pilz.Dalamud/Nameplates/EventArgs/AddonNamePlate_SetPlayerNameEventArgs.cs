@@ -12,6 +12,7 @@ namespace Pilz.Dalamud.Nameplates.EventArgs
         public IntPtr TitlePtr { get; set; }
         public IntPtr NamePtr { get; set; }
         public IntPtr FreeCompanyPtr { get; set; }
+        public IntPtr PrefixPtr { get; set; }
         public bool IsTitleAboveName { get; set; }
         public bool IsTitleVisible { get; set; }
         public int IconID { get; set; }

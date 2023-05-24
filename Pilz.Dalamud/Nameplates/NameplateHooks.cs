@@ -28,9 +28,9 @@ namespace Pilz.Dalamud.Nameplates
         public event AddonNamePlate_SetPlayerNameManagedEventHandler AddonNamePlate_SetPlayerNameManaged;
         public delegate void AddonNamePlate_SetPlayerNameManagedEventHandler(AddonNamePlate_SetPlayerNameManagedEventArgs eventArgs);
 
-        [Signature("48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2", DetourName = nameof(SetPlayerNameplateDetour))]
-        private readonly Hook<AddonNamePlate_SetPlayerNameplateDetour>? hook_AddonNamePlate_SetPlayerNameplateDetour = null;
-        private unsafe delegate IntPtr AddonNamePlate_SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
+        [Signature("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B 5C 24 ?? 45 38 BE", DetourName = nameof(SetPlayerNameplateDetour))]
+        private Hook<AddonNamePlate_SetPlayerNameplateDetour>? hook_AddonNamePlate_SetPlayerNameplateDetour = null;
+        private unsafe delegate IntPtr AddonNamePlate_SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, IntPtr prefix, int iconId);
 
         /// <summary>
         /// Defines if all hooks are enabled. If this is false, then there might be something wrong or the class already has been disposed.
@@ -86,7 +86,7 @@ namespace Pilz.Dalamud.Nameplates
             return hook != null && hook.IsEnabled;
         }
 
-        private IntPtr SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId)
+        private IntPtr SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, IntPtr prefix, int iconId)
         {
             var result = IntPtr.Zero;
 
@@ -98,6 +98,7 @@ namespace Pilz.Dalamud.Nameplates
                     TitlePtr = titlePtr,
                     NamePtr = namePtr,
                     FreeCompanyPtr = freeCompanyPtr,
+                    PrefixPtr = prefix,
                     IsTitleAboveName = isTitleAboveName,
                     IsTitleVisible = isTitleVisible,
                     IconID = iconId
@@ -118,6 +119,7 @@ namespace Pilz.Dalamud.Nameplates
                         eventArgs.TitlePtr,
                         eventArgs.NamePtr,
                         eventArgs.FreeCompanyPtr,
+                        prefix,
                         eventArgs.IconID);
                 };
 
@@ -130,6 +132,7 @@ namespace Pilz.Dalamud.Nameplates
                     var freeTitle = false;
                     var freeName = false;
                     var freeFreeCompany = false;
+                    var freePrefix = false;
 
                     // Create NamePlateObject if possible
                     var namePlateObj = new SafeNameplateObject(playerNameplateObjectPtr);
@@ -141,18 +144,20 @@ namespace Pilz.Dalamud.Nameplates
                         SafeNameplateObject = namePlateObj,
                         Title = GameInterfaceHelper.ReadSeString(eventArgs.TitlePtr),
                         Name = GameInterfaceHelper.ReadSeString(eventArgs.NamePtr),
-                        FreeCompany = GameInterfaceHelper.ReadSeString(eventArgs.FreeCompanyPtr)
+                        FreeCompany = GameInterfaceHelper.ReadSeString(eventArgs.FreeCompanyPtr),
+                        Prefix = GameInterfaceHelper.ReadSeString(eventArgs.PrefixPtr)
                     };
 
                     // Get raw string content
                     var titleRaw = managedEventArgs.Title.Encode();
                     var nameRaw = managedEventArgs.Name.Encode();
                     var freeCompanyRaw = managedEventArgs.FreeCompany.Encode();
+                    var prefixRaw = managedEventArgs.Prefix.Encode();
 
                     // Invoke Managed Event
                     AddonNamePlate_SetPlayerNameManaged.Invoke(managedEventArgs);
 
-                    // Get new Title string ontent
+                    // Get new Title string content
                     var titleNewRaw = managedEventArgs.Title.Encode();
                     if (!titleRaw.SequenceEqual(titleNewRaw))
                     {
@@ -160,7 +165,7 @@ namespace Pilz.Dalamud.Nameplates
                         freeTitle = true;
                     }
 
-                    // Get new Name string ontent
+                    // Get new Name string content
                     var nameNewRaw = managedEventArgs.Name.Encode();
                     if (!nameRaw.SequenceEqual(nameNewRaw))
                     {
@@ -168,12 +173,20 @@ namespace Pilz.Dalamud.Nameplates
                         freeName = true;
                     }
 
-                    // Get new Free Company string ontent
+                    // Get new Free Company string content
                     var freeCompanyNewRaw = managedEventArgs.FreeCompany.Encode();
                     if (!freeCompanyRaw.SequenceEqual(freeCompanyNewRaw))
                     {
                         eventArgs.FreeCompanyPtr = GameInterfaceHelper.PluginAllocate(freeCompanyNewRaw);
                         freeFreeCompany = true;
+                    }
+
+                    // Get new Prefix string content
+                    var prefixNewRaw = managedEventArgs.Prefix.Encode();
+                    if (!prefixRaw.SequenceEqual(prefixNewRaw))
+                    {
+                        eventArgs.PrefixPtr = GameInterfaceHelper.PluginAllocate(prefixNewRaw);
+                        freePrefix = true;
                     }
 
                     // Call Original as we changed something
@@ -186,6 +199,8 @@ namespace Pilz.Dalamud.Nameplates
                         GameInterfaceHelper.PluginFree(eventArgs.NamePtr);
                     if (freeFreeCompany)
                         GameInterfaceHelper.PluginFree(eventArgs.FreeCompanyPtr);
+                    if (freePrefix)
+                        GameInterfaceHelper.PluginFree(eventArgs.PrefixPtr);
                 }
                 else if(!hasDefaultHookEvent)
                 {
