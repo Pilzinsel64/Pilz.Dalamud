@@ -35,7 +35,7 @@ namespace Pilz.Dalamud.ActivityContexts
             PluginServices.ClientState.TerritoryChanged -= ClientState_TerritoryChanged;
         }
 
-        private void ClientState_TerritoryChanged(object? sender, ushort e)
+        private void ClientState_TerritoryChanged(ushort obj)
         {
             CheckCurrentTerritory();
         }
