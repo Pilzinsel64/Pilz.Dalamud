@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Pilz.Dalamud.Nameplates.Model;
 using Lumina.Excel.GeneratedSheets;
 using System.Xml.Linq;
+using Dalamud.Plugin.Services;
 
 namespace Pilz.Dalamud.Nameplates
 {
@@ -52,7 +53,7 @@ namespace Pilz.Dalamud.Nameplates
         /// </summary>
         public NameplateHooks()
         {
-            SignatureHelper.Initialise(this);
+            PluginServices.GameInteropProvider.InitializeFromAttributes(this);
         }
 
         ~NameplateHooks()
