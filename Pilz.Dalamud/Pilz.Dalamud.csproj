@@ -27,6 +27,14 @@
         <Version>0.4.0</Version>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
+ 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
+ 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
   
     <ItemGroup>
         <Reference Include="FFXIVClientStructs">
@@ -60,7 +68,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\README.md" Pack="true" PackagePath="\"/>
+      <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

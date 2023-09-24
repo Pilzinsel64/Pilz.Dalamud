@@ -28,7 +28,7 @@ namespace Pilz.Dalamud.Nameplates.Tools
         /// taking into account whether or not the player is in a duty.
         /// </summary>
         /// <param name="iconId">The incoming icon id that is being overwritten by the plugin.</param>
-        /// <param name="priorityIconId">The icon id that should be used.</param>
+        /// <param name="activityContext"></param>
         /// <returns>Whether a priority icon was found.</returns>
         public bool IsPriorityIcon(int iconId, ActivityContext activityContext)
         {
