@@ -24,7 +24,7 @@ namespace Pilz.Dalamud
         /// Removes a Payload from a given list.
         /// Using <code>List.Remove()</code> does not use the reference to compare for some reason. Tis is a workaround.
         /// </summary>
-        /// <param name="seString"></param>
+        /// <param name="payloads"></param>
         /// <param name="payload"></param>
         public static void Remove(this List<Payload> payloads, Payload payload)
         {

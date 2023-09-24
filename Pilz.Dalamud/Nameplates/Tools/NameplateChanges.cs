@@ -50,6 +50,7 @@ namespace Pilz.Dalamud.Nameplates.Tools
         /// Gets a change of the position of the element of your choice where you can add your payloads.
         /// </summary>
         /// <param name="element">The position of your choice.</param>
+        /// <param name="position">The position of your choice.</param>
         /// <returns></returns>
         public StringChange GetChange(NameplateElements element, StringPosition position)
         {
