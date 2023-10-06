@@ -36,6 +36,7 @@ namespace Pilz.Dalamud.Nameplates
         public void Dispose()
         {
             Hooks?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public static T? GetNameplateGameObject<T>(SafeNameplateObject namePlateObject) where T : GameObject
@@ -49,19 +50,17 @@ namespace Pilz.Dalamud.Nameplates
             var nameplateAddonPtr = PluginServices.GameGui.GetAddonByName("NamePlate", 1);
             var nameplateObjectArrayPtrPtr = nameplateAddonPtr + Marshal.OffsetOf(typeof(AddonNamePlate), nameof(AddonNamePlate.NamePlateObjectArray)).ToInt32();
             var nameplateObjectArrayPtr = Marshal.ReadIntPtr(nameplateObjectArrayPtrPtr);
+
             if (nameplateObjectArrayPtr == IntPtr.Zero)
-            {
                 return null;
-            }
 
             // Determine the index of the nameplate object within the nameplate object array
             var namePlateObjectSize = Marshal.SizeOf(typeof(AddonNamePlate.NamePlateObject));
             var namePlateObjectPtr0 = nameplateObjectArrayPtr + namePlateObjectSize * 0;
             var namePlateIndex = (nameplateObjectPtr.ToInt64() - namePlateObjectPtr0.ToInt64()) / namePlateObjectSize;
+            
             if (namePlateIndex < 0 || namePlateIndex >= AddonNamePlate.NumNamePlateObjects)
-            {
                 return null;
-            }
 
             // Get the nameplate info array
             IntPtr nameplateInfoArrayPtr = IntPtr.Zero;
