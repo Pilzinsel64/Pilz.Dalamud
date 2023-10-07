@@ -89,7 +89,7 @@ namespace Pilz.Dalamud.Nameplates
             if (isDisposing)
             {
                 if (!IsHookDisposed(hook_AddonNamePlate_SetPlayerNameplateDetour))
-                    hook_AddonNamePlate_SetPlayerNameplateDetour?.Disable();
+                    hook_AddonNamePlate_SetPlayerNameplateDetour?.Dispose();
             }
             else
             {
