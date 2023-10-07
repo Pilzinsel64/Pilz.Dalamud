@@ -33,8 +33,6 @@ namespace Pilz.Dalamud.Nameplates
         private Hook<AddonNamePlate_SetPlayerNameplateDetour>? hook_AddonNamePlate_SetPlayerNameplateDetour = null;
         private unsafe delegate IntPtr AddonNamePlate_SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, IntPtr prefix, int iconId);
 
-        private bool allowHookHandling = false;
-
         /// <summary>
         /// Defines if all hooks are enabled. If this is false, then there might be something wrong or the class already has been disposed.
         /// </summary>
@@ -65,7 +63,7 @@ namespace Pilz.Dalamud.Nameplates
 
         public void Dispose()
         {
-            Unhook();
+            Unhook(true);
             GC.SuppressFinalize(this);
         }
 
@@ -76,7 +74,6 @@ namespace Pilz.Dalamud.Nameplates
         {
             if (!IsHookEnabled(hook_AddonNamePlate_SetPlayerNameplateDetour))
                 hook_AddonNamePlate_SetPlayerNameplateDetour?.Enable();
-            allowHookHandling = true;
         }
 
         /// <summary>
@@ -84,21 +81,38 @@ namespace Pilz.Dalamud.Nameplates
         /// </summary>
         internal void Unhook()
         {
-            if (allowHookHandling && IsHookEnabled(hook_AddonNamePlate_SetPlayerNameplateDetour))
-                hook_AddonNamePlate_SetPlayerNameplateDetour?.Disable();
-            allowHookHandling = false;
+            Unhook(false);
+        }
+
+        private void Unhook(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (!IsHookDisposed(hook_AddonNamePlate_SetPlayerNameplateDetour))
+                    hook_AddonNamePlate_SetPlayerNameplateDetour?.Disable();
+            }
+            else
+            {
+                if (IsHookEnabled(hook_AddonNamePlate_SetPlayerNameplateDetour))
+                    hook_AddonNamePlate_SetPlayerNameplateDetour?.Disable();
+            }
+        }
+
+        private static bool IsHookDisposed<T>(Hook<T> hook) where T : Delegate
+        {
+            return hook == null || hook.IsDisposed;
         }
 
         private static bool IsHookEnabled<T>(Hook<T> hook) where T : Delegate
         {
-            return hook != null && hook.IsEnabled;
+            return !IsHookDisposed(hook) && hook.IsEnabled;
         }
 
         private IntPtr SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, IntPtr prefix, int iconId)
         {
             var result = IntPtr.Zero;
 
-            if (allowHookHandling && IsHookEnabled(hook_AddonNamePlate_SetPlayerNameplateDetour))
+            if (IsHookEnabled(hook_AddonNamePlate_SetPlayerNameplateDetour))
             {
                 var eventArgs = new AddonNamePlate_SetPlayerNameEventArgs
                 {
