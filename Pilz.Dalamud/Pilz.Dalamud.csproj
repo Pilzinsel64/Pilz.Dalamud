@@ -24,7 +24,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <RepositoryUrl>https://github.com/Pilzinsel64/Pilz.Dalamud</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <Version>0.4.1</Version>
+        <Version>0.5.2</Version>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
  
