@@ -1,30 +1,20 @@
-﻿using Dalamud.Data;
-using Dalamud.Game.ClientState;
-using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.Gui;
-using Dalamud.IoC;
+﻿using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Pilz.Dalamud
+namespace Pilz.Dalamud;
+
+public class PluginServices
 {
-    public class PluginServices
-    {
-        [PluginService] public static IDalamudPluginInterface PluginInterface { get; set; } = null;
-        [PluginService] public static IGameGui GameGui { get; set; } = null;
-        [PluginService] public static IClientState ClientState { get; set; } = null;
-        [PluginService] public static IDataManager DataManager { get; set; } = null;
-        [PluginService] public static IObjectTable ObjectTable { get; set; } = null;
-        [PluginService] public static IGameInteropProvider GameInteropProvider { get; set; } = null;
+    [PluginService] public static IDalamudPluginInterface PluginInterface { get; set; } = null;
+    [PluginService] public static IGameGui GameGui { get; set; } = null;
+    [PluginService] public static IClientState ClientState { get; set; } = null;
+    [PluginService] public static IDataManager DataManager { get; set; } = null;
+    [PluginService] public static IObjectTable ObjectTable { get; set; } = null;
+    [PluginService] public static IGameInteropProvider GameInteropProvider { get; set; } = null;
 
-        public static void Initialize(IDalamudPluginInterface dalamudPluginInterface)
-        {
-            dalamudPluginInterface.Create<PluginServices>();
-        }
+    public static void Initialize(IDalamudPluginInterface dalamudPluginInterface)
+    {
+        dalamudPluginInterface.Create<PluginServices>();
     }
 }

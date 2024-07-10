@@ -1,39 +1,33 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.System.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Pilz.Dalamud.Nameplates.Model;
 
-namespace Pilz.Dalamud
+namespace Pilz.Dalamud;
+
+public class XivApi
 {
-    public class XivApi
+    private static IntPtr _RaptureAtkModulePtr = IntPtr.Zero;
+
+    public static IntPtr RaptureAtkModulePtr
     {
-        private static IntPtr _RaptureAtkModulePtr = IntPtr.Zero;
-
-        public static IntPtr RaptureAtkModulePtr
+        get
         {
-            get
+            if (_RaptureAtkModulePtr == IntPtr.Zero)
             {
-                if (_RaptureAtkModulePtr == IntPtr.Zero)
+                unsafe
                 {
-                    unsafe
-                    {
-                        var framework = Framework.Instance();
-                        var uiModule = framework->GetUiModule();
+                    var framework = Framework.Instance();
+                    var uiModule = framework->GetUiModule();
 
-                        _RaptureAtkModulePtr = new IntPtr(uiModule->GetRaptureAtkModule());
-                    }
+                    _RaptureAtkModulePtr = new IntPtr(uiModule->GetRaptureAtkModule());
                 }
-
-                return _RaptureAtkModulePtr;
             }
-        }
 
-        public static SafeAddonNameplate GetSafeAddonNamePlate()
-        {
-            return new(PluginServices.PluginInterface);
+            return _RaptureAtkModulePtr;
         }
+    }
+
+    public static SafeAddonNameplate GetSafeAddonNamePlate()
+    {
+        return new(PluginServices.PluginInterface);
     }
 }
