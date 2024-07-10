@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Pilz.Dalamud.Nameplates.Model;
+using Pilz.Dalamud.Icons;
 
-namespace Pilz.Dalamud.Nameplates.Tools;
+namespace Pilz.Dalamud.Tools.NamePlates;
 
 public class StatusIconPriorizerSettings
 {

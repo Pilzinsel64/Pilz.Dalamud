@@ -1,4 +1,4 @@
-﻿namespace Pilz.Dalamud.Nameplates.Tools;
+﻿namespace Pilz.Dalamud.Tools.NamePlates;
 
 public enum StatusIconPriorizerConditionSets
 {

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Pilz.Dalamud.Nameplates.Model;
+namespace Pilz.Dalamud.Icons;
 
 [JsonConverter(typeof(StringEnumConverter))]
 public enum StatusIcons

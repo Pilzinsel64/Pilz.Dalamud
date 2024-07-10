@@ -6,12 +6,12 @@ namespace Pilz.Dalamud;
 
 public class PluginServices
 {
-    [PluginService] public static IDalamudPluginInterface PluginInterface { get; set; } = null;
-    [PluginService] public static IGameGui GameGui { get; set; } = null;
-    [PluginService] public static IClientState ClientState { get; set; } = null;
-    [PluginService] public static IDataManager DataManager { get; set; } = null;
-    [PluginService] public static IObjectTable ObjectTable { get; set; } = null;
-    [PluginService] public static IGameInteropProvider GameInteropProvider { get; set; } = null;
+    [PluginService] public static IDalamudPluginInterface PluginInterface { get; set; }
+    [PluginService] public static IGameGui GameGui { get; set; }
+    [PluginService] public static IClientState ClientState { get; set; }
+    [PluginService] public static IDataManager DataManager { get; set; }
+    [PluginService] public static IObjectTable ObjectTable { get; set; }
+    [PluginService] public static IGameInteropProvider GameInteropProvider { get; set; }
 
     public static void Initialize(IDalamudPluginInterface dalamudPluginInterface)
     {
