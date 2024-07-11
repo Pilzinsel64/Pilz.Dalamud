@@ -19,10 +19,10 @@ public class NameplateElementChange(NameplateElements element, INamePlateUpdateH
                 handler.NameParts.TextWrap = parts;
                 break;
             case NameplateElements.Title:
-                handler.TitleParts.TextWrap = parts;
+                handler.TitleParts.OuterWrap = parts;
                 break;
             case NameplateElements.FreeCompany:
-                handler.FreeCompanyTagParts.TextWrap = parts;
+                handler.FreeCompanyTagParts.OuterWrap = parts;
                 break;
         }
     }
