@@ -37,4 +37,7 @@ public interface INamePlateGui
     /// Requests that all nameplates should be redrawn on the following frame.
     /// </summary>
     void RequestRedraw();
+
+    private static NamePlateGui instance;
+    public static INamePlateGui Instance => instance ??= new ();
 }
