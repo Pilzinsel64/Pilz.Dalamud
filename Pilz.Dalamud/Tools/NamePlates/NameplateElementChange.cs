@@ -1,5 +1,5 @@
-﻿using Dalamud.Game.Gui.NamePlate;
-using Dalamud.Game.Text.SeStringHandling;
+﻿using Dalamud.Game.Text.SeStringHandling;
+using Pilz.Dalamud.NamePlate;
 using Pilz.Dalamud.Tools.Strings;
 
 namespace Pilz.Dalamud.Tools.NamePlates;

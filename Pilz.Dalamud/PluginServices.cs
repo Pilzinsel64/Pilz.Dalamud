@@ -12,6 +12,7 @@ public class PluginServices
     [PluginService] public static IDataManager DataManager { get; set; }
     [PluginService] public static IObjectTable ObjectTable { get; set; }
     [PluginService] public static IGameInteropProvider GameInteropProvider { get; set; }
+    [PluginService] public static IAddonLifecycle AddonLifecycle { get; set; }
 
     public static void Initialize(IDalamudPluginInterface dalamudPluginInterface)
     {

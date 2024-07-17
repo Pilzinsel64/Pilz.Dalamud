@@ -1,4 +1,4 @@
-﻿using Dalamud.Game.Gui.NamePlate;
+﻿using Pilz.Dalamud.NamePlate;
 
 namespace Pilz.Dalamud.Tools.NamePlates;
 
