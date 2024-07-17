@@ -29,16 +29,19 @@ public class NameplateElementChange(NameplateElements element, INamePlateUpdateH
 
     public void ApplyChanges()
     {
-        StringUpdateFactory.ApplyStringChanges(new()
+        if (Changes.Any())
         {
-            StringChanges = Changes,
-            Destination = element switch
+            StringUpdateFactory.ApplyStringChanges(new()
             {
-                NameplateElements.Name => handler.NameParts.Text ??= handler.InfoView.Name,
-                NameplateElements.Title => handler.TitleParts.Text ??= handler.InfoView.Title,
-                NameplateElements.FreeCompany => handler.FreeCompanyTagParts.Text ??= handler.InfoView.FreeCompanyTag,
-                _ => null,
-            },
-        });
+                StringChanges = Changes,
+                Destination = element switch
+                {
+                    NameplateElements.Name => handler.NameParts.Text ??= handler.InfoView.Name,
+                    NameplateElements.Title => handler.TitleParts.Text ??= handler.InfoView.Title,
+                    NameplateElements.FreeCompany => handler.FreeCompanyTagParts.Text ??= handler.InfoView.FreeCompanyTag,
+                    _ => null,
+                },
+            });
+        }
     }
 }
