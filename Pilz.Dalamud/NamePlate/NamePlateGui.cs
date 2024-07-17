@@ -41,7 +41,7 @@ public sealed class NamePlateGui : IDisposable, INamePlateGui
 
     private NamePlateUpdateHandler[] updateHandlers = [];
 
-    private NamePlateGui()
+    public NamePlateGui()
     {
         this.addonLifecycle.RegisterListener(AddonEvent.PreRequestedUpdate, "NamePlate", this.OnPreRequestedUpdate);
     }
