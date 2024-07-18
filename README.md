@@ -1,3 +1,5 @@
+# [REPOSITORY HAS MOVED TO GITLAB](https://git.pilzinsel64.de/pilz-framework/pilz.dalamud)
+
 # Pilz.Dalamud
 
 This library is a set of usefull functions you can use within your Dalamud plugin.\
